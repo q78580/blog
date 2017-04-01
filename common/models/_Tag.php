@@ -27,8 +27,8 @@ class _Tag extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name'], 'required'],
-            [['id', 'frequency'], 'integer'],
+            [['name'], 'required'],
+            [['frequency'], 'integer'],
             [['name'], 'string', 'max' => 128],
         ];
     }
