@@ -72,6 +72,7 @@ return [
     'Catalog' => '分类',
     'Post' => '文章',
     'Comment' => '评论',
+    'Comments' => '评论管理',
     'Tag' => '标签',
     'Tags' => '标签',
     'Create Time'=>'创建时间',

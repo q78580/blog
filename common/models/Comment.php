@@ -3,4 +3,9 @@ namespace common\models;
 use Yii;
 class Comment extends _Comment
 {
+    public function getCont(){
+        $tmpStr = strip_tags($this->content);//剥去html标签
+        $tmpLen = mb_strlen($tmpStr);//汉字截取mb_
+        return mb_substr($tmpStr,0,10,'utf-8').(($tmpLen>20?"...":''));
+    }
 }
