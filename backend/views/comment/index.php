@@ -24,14 +24,37 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'content:ntext',
-            'status',
-            'create_time:datetime',
-            'user_id',
+            [
+                'attribute'=>'id',
+                'options'=>['width'=>'30px']
+            ],
+//            'content:ntext',
+            [
+                'attribute'=>'content',
+                'value'=>'cont'
+            ],
+            [
+                'attribute'=>'username',
+                'label'=>'评论人',
+                'value'=>'user.username',
+            ],
+            [
+                'attribute'=>'status',
+                'value'=>'status0.name',
+                'filter'=>\common\models\CommentStatus::find()->select(['name','id'])->indexBy('id')->column()
+            ],
+            [
+                'attribute'=>'create_time',
+                'format'=>'datetime',
+                'label'=>'发布日期',
+            ],
+
             // 'email:email',
             // 'url:url',
-            // 'post_id',
+             [
+                 'attribute'=>'post.title',
+                 'label'=>'文章标题',
+             ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
