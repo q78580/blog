@@ -66,12 +66,18 @@ return [
     'Update User Id' => '更新用户',
 
     'Directly Input Time' => '可直接输入日期，格式：2015-01-01',
-
+    'Title' => '标题',
+    'Content' =>'内容',
     'Blog' => '博客',
     'Catalog' => '分类',
     'Post' => '文章',
     'Comment' => '评论',
     'Tag' => '标签',
+    'Tags' => '标签',
+    'Create Time'=>'创建时间',
+    'Update Time'=>'更新时间',
+    'Author'=>'作者',
+    'Author ID'=>'作者ID'
 
 
 ];

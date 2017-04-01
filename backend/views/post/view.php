@@ -32,11 +32,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'content:ntext',
             'tags:ntext',
-            'status',
+            'status0.name',
             'create_time:datetime',
             'update_time:datetime',
-            'author_id',
+//            'author_id',
+            [
+                'attribute'=>'author.username',
+//                'value'=>$model->author->username,
+                'label'=>Yii::t('app','Author'),
+            ]
         ],
+        'template'=>'<tr><th style="width:120px;">{label}</th><td>{value}</td></tr>',
+        'options'=>['class'=>'table table-striped table-bordered detail-view'],
     ]) ?>
 
 </div>
