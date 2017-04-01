@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'author_id',
             [
                 'attribute'=>'author.username',
-//                'value'=>$model->author->username,
+//                'value'=>'author.username',
                 'label'=>Yii::t('app','Author'),
             ]
         ],
