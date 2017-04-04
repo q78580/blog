@@ -15,14 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Comment'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+//            ['class' => 'yii\grid\SerialColumn'],
 
             [
                 'attribute'=>'id',
@@ -41,7 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'status',
                 'value'=>'status0.name',
-                'filter'=>\common\models\CommentStatus::find()->select(['name','id'])->indexBy('id')->column()
+                'filter'=>\common\models\CommentStatus::find()->select(['name','id'])->orderBy('position')->indexBy('id')->column(),
+                'contentOptions'=>function($model){
+                    if($model){
+                        return ($model->status != 2)?['class'=>'bg-danger']:[];
+                    }
+                },
             ],
             [
                 'attribute'=>'create_time',
@@ -52,11 +55,27 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'email:email',
             // 'url:url',
              [
-                 'attribute'=>'post.title',
+                 'attribute'=>'post_title',
                  'label'=>'文章标题',
+                 'value'=>'post.title',
              ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template'=>'{view}{update}{delete}{check}',
+                'buttons'=>[
+                    'check'=>function($url,$moel,$key){
+                        $options = [
+                            'title'=>Yii::t('app','审查'),
+                            'aria-label'=>Yii::t('app','审查'),
+                            'data-confirm'=>Yii::t('app','审查吗？'),
+                            'data-method'=>'post',
+                            'data-pjax'=>0,
+                        ];
+                        return Html::a('<span class="glyphicon glyphicon-check"></span>>',\yii\helpers\Url::to(['comment/check','id'=>$key],$options));
+                    },
+                ],
+            ],
         ],
     ]); ?>
 </div>

@@ -8,4 +8,8 @@ class Comment extends _Comment
         $tmpLen = mb_strlen($tmpStr);//汉字截取mb_
         return mb_substr($tmpStr,0,10,'utf-8').(($tmpLen>20?"...":''));
     }
+    public function check(){
+        $this->status = 2;
+        return $this->save()?true:false;
+    }
 }
