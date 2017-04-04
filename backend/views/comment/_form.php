@@ -14,17 +14,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList(\common\models\CommentStatus::find()->select(['name','id'])->indexBy('id')->column(),['prompt'=>'请选择']) ?>
 
-    <?= $form->field($model, 'create_time')->textInput() ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+
+
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'post_id')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

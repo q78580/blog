@@ -30,12 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'content:ntext',
-            'status',
+            ['attribute'=>'status0.name','label'=>'审核状态'],
             'create_time:datetime',
-            'user_id',
+            ['attribute'=>'user.username','label'=>'评论人'],
             'email:email',
             'url:url',
-            'post_id',
+            ['attribute'=>'post.title','label'=>'文章标题'],
         ],
     ]) ?>
 

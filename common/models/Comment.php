@@ -12,4 +12,7 @@ class Comment extends _Comment
         $this->status = 2;
         return $this->save()?true:false;
     }
+    public static function getUnCheckCount(){
+        return Comment::find()->where(['status'=>1])->count();
+    }
 }
