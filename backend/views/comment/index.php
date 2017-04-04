@@ -66,13 +66,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons'=>[
                     'check'=>function($url,$moel,$key){
                         $options = [
-                            'title'=>Yii::t('app','审查'),
-                            'aria-label'=>Yii::t('app','审查'),
-                            'data-confirm'=>Yii::t('app','审查吗？'),
+                            'title'=>Yii::t('app','审核'),
+                            'aria-label'=>Yii::t('app','审核'),
+                            'data-confirm'=>Yii::t('app','确定通过审核吗？'),
                             'data-method'=>'post',
-                            'data-pjax'=>0,
+                            'data-pjax'=>'0',
                         ];
-                        return Html::a('<span class="glyphicon glyphicon-check"></span>>',\yii\helpers\Url::to(['comment/check','id'=>$key],$options));
+                        return Html::a('<span class="glyphicon glyphicon-check"></span>>',$url,$options);
                     },
                 ],
             ],
