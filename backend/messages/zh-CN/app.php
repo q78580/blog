@@ -54,6 +54,7 @@ return [
     'still used' => '还在使用',
 
     'Username' => '账户',
+    'Nickname' => '昵称',
     'Password' => '密码',
     'Repassword' => '确认密码',
     'Remember Me' => '自动登录',
@@ -78,7 +79,7 @@ return [
     'Create Time'=>'创建时间',
     'Update Time'=>'更新时间',
     'Author'=>'作者',
-    'Author ID'=>'作者ID'
+    'Author ID'=>'作者ID',
 
 
 ];
