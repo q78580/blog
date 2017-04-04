@@ -14,7 +14,7 @@ class CommentSearch extends Comment
 {
     public function attributes()
     {
-        return array_merge(parent::attributes(),['username']);
+        return array_merge(parent::attributes(),['username','post_title']);
     }
 
     /**
@@ -24,7 +24,7 @@ class CommentSearch extends Comment
     {
         return [
             [['id', 'status', 'create_time', 'user_id', 'post_id'], 'integer'],
-            [['content', 'email', 'url' ,'username'], 'safe'],
+            [['content', 'email', 'url' ,'username','post_title'], 'safe'],
         ];
     }
 
@@ -64,18 +64,33 @@ class CommentSearch extends Comment
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'status' => $this->status,
-            'create_time' => $this->create_time,
-            'user_id' => $this->user_id,
-            'post_id' => $this->post_id,
+            'comment.id' => $this->id,
+            'comment.status' => $this->status,
+            'comment.create_time' => $this->create_time,
+            'comment.user_id' => $this->user_id,
+            'comment.post_id' => $this->post_id,
         ]);
 
-        $query->andFilterWhere(['like', 'content', $this->content])
+        $query->andFilterWhere(['like', 'comment.content', $this->content])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'url', $this->url]);
         $query->join('INNER JOIN','user','user.id = comment.user_id');
+
         $query->andFilterWhere(['like','user.username',$this->username]);
+        $dataProvider->sort->attributes['username']=[
+            'asc'=>['user.username'=>SORT_ASC],
+            'desc'=>['user.username'=>SORT_DESC],
+        ];
+        $query->join('INNER JOIN','post','post.id = comment.post_id');
+        $query->andFilterWhere(['like','post.title',$this->post_title]);
+        $dataProvider->sort->attributes['post_title']=[
+            'asc'=>['post.title'=>SORT_ASC],
+            'desc'=>['post.title'=>SORT_DESC],
+        ];
+        $dataProvider->sort->defaultOrder=[
+            'status'=>SORT_ASC,
+            'id'=>SORT_DESC,
+        ];
 
         return $dataProvider;
     }
