@@ -5,7 +5,9 @@ namespace backend\controllers;
 use Yii;
 use common\models\Post;
 use common\models\PostSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -26,6 +28,22 @@ class PostController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            //acl 简单控制 RBAC复杂控制
+//            'access'=>[
+//                'class'=>AccessControl::className(),
+//                'rules'=>[
+//                    [
+//                        'actions'=>['index','view'],
+//                        'allow'=>true,
+//                        'roles'=>['?'],//角色未登录
+//                    ],
+//                    [
+//                        'actions'=>['logout','index','view','create','update'],
+//                        'allow'=>true,
+//                        'roles'=>['@'],
+//                    ]
+//                ],
+//            ],
         ];
     }
 
@@ -63,6 +81,9 @@ class PostController extends Controller
      */
     public function actionCreate()
     {
+        if(!Yii::$app->user->can('createPost')){
+            throw new ForbiddenHttpException('对不起，你没有进行该操作的权限');
+        }
         $model = new Post();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -82,6 +103,9 @@ class PostController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(!Yii::$app->user->can('updatePost')){
+            throw new ForbiddenHttpException('对不起，你没有进行该操作的权限');
+        }
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -101,6 +125,9 @@ class PostController extends Controller
      */
     public function actionDelete($id)
     {
+        if(!Yii::$app->user->can('deletePost')){
+            throw new ForbiddenHttpException('对不起，你没有进行该操作的权限');
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

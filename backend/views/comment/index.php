@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template'=>'{view}{update}{delete}{check}',
+                'template'=>'{view} {update} {delete}  {check}',
                 'buttons'=>[
                     'check'=>function($url,$moel,$key){
                         $options = [

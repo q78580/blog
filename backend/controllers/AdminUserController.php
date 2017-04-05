@@ -2,6 +2,9 @@
 
 namespace backend\controllers;
 
+use backend\models\ResetPasswordForm;
+use common\models\AuthAssignment;
+use common\models\AuthItem;
 use Yii;
 use common\models\AdminUser;
 use backend\models\SignupForm;
@@ -129,15 +132,37 @@ class AdminUserController extends Controller
         }
     }
     public function actionReset($id){
-        $admin_user = $this->findModel($id);
-        if($admin_user->resetPwd()){
-            return $this->redirect(['index']);
+        $model = new ResetPasswordForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            if($model->resetPassword($id))
+            {
+                return $this->redirect(['index']);
+            }
+
+        } else {
+            return $this->render('resetPassword', [
+                'model' => $model,
+            ]);
         }
     }
-    public function actionCheck($id){
-        $admin_user = $this->findModel($id);
-        if($admin_user->checkLimit()){
-            return $this->redirect(['index']);
+    public function actionPrivilege($id){
+        $auth_item = AuthItem::find()->select(['name','description'])->where(['type'=>1])->orderBy('description')->all();
+        foreach($auth_item as $value){
+            $allPrivilegesArray[$value->name] = $value->description;
         }
+        $authAssignments = AuthAssignment::find()->select(['item_name'])->where(['user_id'=>$id])->all();
+        $authAssignmentsArray = [];
+        foreach($authAssignments as $v){
+            array_push($authAssignmentsArray,$v->item_name);
+        }
+        $model = $this->findModel($id);
+        if (isset($_POST['newPri'])) {
+            $post = $_POST['newPri'];
+            $model->privilege($post);
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        return $this->render('privilege',['id'=>$id,'allPrivileges'=>$allPrivilegesArray,'authAssignments'=>$authAssignmentsArray]);
     }
 }
