@@ -80,6 +80,9 @@ return [
     'Update Time'=>'更新时间',
     'Author'=>'作者',
     'Author ID'=>'作者ID',
+    'Admin Users'=>'管理员列表',
+    'Profile'=>'简介',
+    'Password Repeat'=>'重新输入密码'
 
 
 ];

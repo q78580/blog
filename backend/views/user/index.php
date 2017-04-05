@@ -15,26 +15,30 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+//            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'username',
-            'auth_key',
-            'password_hash',
-            'password_reset_token',
-            // 'email:email',
-            // 'status',
-            // 'created_at',
+//            'auth_key',
+//            'password_hash',
+//            'password_reset_token',
+             'email:email',
+             [
+                 'attribute'=>'status',
+//                 'filter'=>Html::dropDownList($model->status_zh),
+                 'value'=>function($model){
+                     return $model->status_zh[$model->status];
+                 }
+             ],
+             'created_at:datetime',
             // 'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+            'template'=>'{update}'],
         ],
     ]); ?>
 </div>
