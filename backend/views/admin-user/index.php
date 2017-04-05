@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'profile:ntext',
 
             ['class' => 'yii\grid\ActionColumn',
-                'template'=>'{view} {update} {check} {reset}',
+                'template'=>'{view} {update} {privilege} {reset}',
                 'buttons'=>[
                     'reset'=>function($url,$moel,$key){
                         $options = [
@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ];
                         return Html::a('<span class="glyphicon glyphicon-lock"></span>',$url,$options);
                     },
-                    'check'=>function($url,$moel,$key){
+                    'privilege'=>function($url,$moel,$key){
                         $options = [
                             'title'=>Yii::t('app','Check Limit'),
                             'data-label'=>Yii::t('app','Check Limit'),
