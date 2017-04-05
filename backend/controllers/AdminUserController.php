@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\AdminUser;
+use backend\models\SignupForm;
 use common\models\AdminUserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -63,10 +64,16 @@ class AdminUserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new AdminUser();
+        $model = new SignupForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $user = $model->signup();
+//
+            if($user)
+            {
+                return $this->redirect(['view', 'id' => $user->id]);
+            }
+
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -119,6 +126,18 @@ class AdminUserController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    public function actionReset($id){
+        $admin_user = $this->findModel($id);
+        if($admin_user->resetPwd()){
+            return $this->redirect(['index']);
+        }
+    }
+    public function actionCheck($id){
+        $admin_user = $this->findModel($id);
+        if($admin_user->checkLimit()){
+            return $this->redirect(['index']);
         }
     }
 }

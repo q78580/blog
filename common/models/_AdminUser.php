@@ -39,6 +39,8 @@ class _AdminUser extends \yii\db\ActiveRecord implements IdentityInterface
             [['profile'], 'string'],
             [['username', 'nickname', 'password', 'email'], 'string', 'max' => 128],
             [['auth_key'], 'string', 'max' => 32],
+            [['email'], 'unique'],
+            [['email'], 'email'],
             [['password_hash', 'password_reset_token'], 'string', 'max' => 255]
         ];
     }

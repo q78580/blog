@@ -16,22 +16,47 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Admin User'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', '创建管理员'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+//            ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            [
+                'attribute'=> 'id',
+                'contentOptions'=>['width'=>'30px']
+            ],
             'username',
             'nickname',
-            'password',
+//            'password',
             'email:email',
             // 'profile:ntext',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+                'template'=>'{view} {update} {check} {reset}',
+                'buttons'=>[
+                    'reset'=>function($url,$moel,$key){
+                        $options = [
+                            'title'=>Yii::t('app','Reset Password'),
+                            'data-label'=>Yii::t('app','Reset Password'),
+                            'data-pjax'=>0,
+                        ];
+                        return Html::a('<span class="glyphicon glyphicon-lock"></span>',$url,$options);
+                    },
+                    'check'=>function($url,$moel,$key){
+                        $options = [
+                            'title'=>Yii::t('app','Check Limit'),
+                            'data-label'=>Yii::t('app','Check Limit'),
+                            'data-pjax'=>0,
+                        ];
+                        return Html::a('<span class="glyphicon glyphicon-user"></span>',$url,$options);
+                    }
+
+                ],
+                'contentOptions'=>['width'=>'80px']
+            ],
         ],
     ]); ?>
 </div>
