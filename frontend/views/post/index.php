@@ -34,8 +34,37 @@ use yii\grid\GridView;
         </div>
 
         <div class="col-md-3">
-            右侧
-
+            <div class="searchbox">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查找文章
+                    </li>
+                    <li class="list-group-item">
+                        <form class="form-inline" action="<?= Yii::$app->urlManager->createUrl(['post/index']);?>"  id="w0" method="get">
+                            <div class="form-group">
+                                <input type="text" class="form-control"  name="PostSearch[title]" id="w0input" placeholder="按标题"><!--placeholder 提示-->
+                            </div>
+                            <button type="submit" class="btn btn-default">搜索</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <div class="tagcloudbox">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>标签云
+                    </li>
+                    <li class="list-group-item">搜索框</li>
+                </ul>
+            </div>
+            <div class="commentbox">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>最新评论
+                    </li>
+                    <li class="list-group-item">搜索框</li>
+                </ul>
+            </div>
         </div>
 
 
