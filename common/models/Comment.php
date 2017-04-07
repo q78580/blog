@@ -15,4 +15,7 @@ class Comment extends _Comment
     public static function getUnCheckCount(){
         return Comment::find()->where(['status'=>1])->count();
     }
+    public static function findRecentComments($limit = 10){
+        return Comment::find()->where(['status'=>2])->orderBy('create_time')->limit($limit)->all();
+    }
 }

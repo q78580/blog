@@ -2,7 +2,7 @@
 namespace common\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\bootstrap\Html;
+use yii\helpers\Html;
 
 class Post extends _Post
 {
@@ -58,7 +58,7 @@ class Post extends _Post
         $tags = Tag::formatName($this->tags);
         $tags = explode(',',$tags);
         foreach($tags as $value){
-            $links[] = \yii\helpers\Html::a(Html::encode($value),array('post/index',"postSearch[tags]"=>$value));
+            $links[] = Html::a(Html::encode($value),array('post/index',"PostSearch[tags]"=>$value));
         }
         return $links;
     }
