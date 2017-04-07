@@ -47,4 +47,18 @@ class Tag extends _Tag
     public static function formatName($name){
         return trim($name);
     }
+    public static function findTagWeights($limit = 20){
+        $tag_size_level = 5;
+        $model_tags = Tag::find()->orderBy('frequency')->limit($limit)->all();
+        $total = count($model_tags);//15
+        $stepper = ceil($total/$tag_size_level);//3
+        $tags = [];
+        $counter = 1;
+        foreach($model_tags as $model){
+            $weight = ceil($counter/$stepper)+1;
+            $tags[$model->name] = $weight;
+            $counter++;
+        }
+        return $tags;
+    }
 }

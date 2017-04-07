@@ -54,7 +54,9 @@ use yii\grid\GridView;
                     <li class="list-group-item">
                         <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>标签云
                     </li>
-                    <li class="list-group-item">搜索框</li>
+                    <li class="list-group-item">
+                        <?= \frontend\components\TagsCloudWidget::widget(['tags'=>$tags])?>
+                    </li>
                 </ul>
             </div>
             <div class="commentbox">
@@ -62,7 +64,9 @@ use yii\grid\GridView;
                     <li class="list-group-item">
                         <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>最新评论
                     </li>
-                    <li class="list-group-item">搜索框</li>
+                    <li class="list-group-item">
+                        <?= \frontend\components\RctReplyWidget::widget(['comments'=>$comments])?>
+                    </li>
                 </ul>
             </div>
         </div>
