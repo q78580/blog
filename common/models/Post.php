@@ -65,4 +65,10 @@ class Post extends _Post
     public function getCommentCount(){
         return Comment::find()->where(['post_id'=>$this->id])->count();
     }
+
+    public function getActiveComments()
+    {
+        return $this->hasMany(Comment::className(), ['post_id' => 'id'])
+            ->where('status=:status',[':status'=>2])->orderBy('id DESC');
+    }
 }
