@@ -127,4 +127,17 @@ class PostController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    public function actionDetail($id){
+        $post = $this->findModel($id);
+
+        $user = Yii::$app->user->identity;
+        $recentComments = Comment::findRecentComments();
+        $tags = Tag::findTagWeights();
+
+        return $this->render('detail',[
+            'model'=>$post,
+            'tags'=>$tags,
+            'recentComments'=>$recentComments,
+        ]);
+    }
 }
