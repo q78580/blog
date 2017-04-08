@@ -16,6 +16,7 @@ use yii\filters\VerbFilter;
  */
 class PostController extends Controller
 {
+    public $added=0; //0代表还没有新回复
     /**
      * @inheritdoc
      */
@@ -133,11 +134,29 @@ class PostController extends Controller
         $user = Yii::$app->user->identity;
         $recentComments = Comment::findRecentComments();
         $tags = Tag::findTagWeights();
+        $commentModel = new Comment();
+        $commentModel->email = $user->email;
+        $commentModel->user_id = $user->id;
+
+        //step2. 当评论提交时，处理评论
+        if($commentModel->load(Yii::$app->request->post()))
+        {
+            $commentModel->create_time = time();
+            $commentModel->status = 1; //新评论默认状态为 pending
+            $commentModel->post_id = $id;
+            if($commentModel->save())
+            {
+                $this->added=1;
+            }
+        }
+
 
         return $this->render('detail',[
             'model'=>$post,
             'tags'=>$tags,
             'recentComments'=>$recentComments,
+            'commentModel'=>$commentModel,
+            'added'=>$this->added,
         ]);
     }
 }
