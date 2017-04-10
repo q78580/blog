@@ -65,6 +65,7 @@ use yii\grid\GridView;
                 $commentModel =new \common\models\Comment();
                 echo $this->render('_guestform',array(
                     'id'=>$model->id,
+                    'notice'=>$notice,
                     'commentModel'=>$commentModel,
                 ));?>
             </div>
