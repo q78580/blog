@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Comment;
 use common\models\Tag;
+use common\models\User;
 use Yii;
 use common\models\Post;
 use common\models\PostSearch;
@@ -135,18 +136,33 @@ class PostController extends Controller
         $recentComments = Comment::findRecentComments();
         $tags = Tag::findTagWeights();
         $commentModel = new Comment();
-        $commentModel->email = $user->email;
-        $commentModel->user_id = $user->id;
+        $notice = '';
+
 
         //step2. 当评论提交时，处理评论
         if($commentModel->load(Yii::$app->request->post()))
         {
-            $commentModel->create_time = time();
-            $commentModel->status = 1; //新评论默认状态为 pending
-            $commentModel->post_id = $id;
-            if($commentModel->save())
-            {
-                $this->added=1;
+            if($user){
+                $commentModel->email = $user->email;
+                $commentModel->user_id = $user->id;
+                $commentModel->create_time = time();
+                $commentModel->status = 1; //新评论默认状态为 pending
+                $commentModel->post_id = $id;
+                if($commentModel->save())
+                {
+                    $this->added=1;
+                }
+            }else{
+//                return $this->render('/site/login'
+//                    [
+//                    'model'=>new User,
+//                    'data' => [
+//                        'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+//                        'method' => 'post',
+//                    ],
+//                ]
+//                );
+                $notice = '请先登录,再进行评论.';
             }
         }
 
@@ -157,6 +173,7 @@ class PostController extends Controller
             'recentComments'=>$recentComments,
             'commentModel'=>$commentModel,
             'added'=>$this->added,
+            'notice'=>$notice
         ]);
     }
 }

@@ -15,6 +15,7 @@ use Yii;
  * @property string $email
  * @property string $url
  * @property integer $post_id
+ * @property integer $remind
  *
  * @property Post $post
  * @property User $user
@@ -38,7 +39,7 @@ class _Comment extends \yii\db\ActiveRecord
         return [
             [['content', 'status', 'user_id', 'email', 'post_id'], 'required'],
             [['content'], 'string'],
-            [['status', 'create_time', 'user_id', 'post_id'], 'integer'],
+            [['status', 'create_time', 'user_id', 'post_id', 'remind'], 'integer'],
             [['email', 'url'], 'string', 'max' => 128],
             [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Post::className(), 'targetAttribute' => ['post_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -60,6 +61,7 @@ class _Comment extends \yii\db\ActiveRecord
             'email' => Yii::t('app', 'Email'),
             'url' => Yii::t('app', 'Url'),
             'post_id' => Yii::t('app', 'Post ID'),
+            'remind' => Yii::t('app', '0为未提醒'),
         ];
     }
 
