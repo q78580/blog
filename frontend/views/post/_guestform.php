@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Comment */
 /* @var $form yii\widgets\ActiveForm */
-//$commentModel->content = empty($notice)?$commentModel->content:$notice;
+$commentModel->content = empty($notice)?$commentModel->content:$notice;
 ?>
 
 <div class="comment-form">
