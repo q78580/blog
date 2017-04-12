@@ -37,7 +37,19 @@ use yii\grid\GridView;
             <div class="searchbox">
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查找文章
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>查找文章(
+<!--                        --><?php
+//                            $post_count_cache = Yii::$app->cache->get('postCount');
+//                            $dependency = new \yii\caching\DbDependency(['sql'=>'select count(id) from post']);
+//                            if($post_count_cache == false){
+//                                $post_count_cache = \common\models\Post::find()->count();
+//                                sleep(3);
+//                                Yii::$app->cache->set('postCount',$post_count_cache,60,$dependency);
+//                            };
+//                            echo $post_count_cache;
+                             echo \common\models\Post::find()->count();
+//                        ?>
+                        )
                     </li>
                     <li class="list-group-item">
                         <form class="form-inline" action="<?= Yii::$app->urlManager->createUrl(['post/index']);?>"  id="w0" method="get">
@@ -55,6 +67,14 @@ use yii\grid\GridView;
                         <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>标签云
                     </li>
                     <li class="list-group-item">
+                        <?php
+//                        $dependency = new \yii\caching\DbDependency(['sql'=>'select count(id) from post']);
+//                        if($this->beginCache('cache',['duration'=>180],['dependency'=>$dependency])){
+//                            echo \frontend\components\TagsCloudWidget::widget(['tags'=>$tags]);
+//                            $this->endCache();
+//                        }
+
+                        ?>
                         <?= \frontend\components\TagsCloudWidget::widget(['tags'=>$tags])?>
                     </li>
                 </ul>

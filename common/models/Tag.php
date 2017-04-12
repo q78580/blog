@@ -49,7 +49,7 @@ class Tag extends _Tag
     }
     public static function findTagWeights($limit = 20){
         $tag_size_level = 5;
-        $model_tags = Tag::find()->orderBy('frequency')->limit($limit)->all();
+        $model_tags = Tag::find()->orderBy(['frequency'=>SORT_DESC])->limit($limit)->all();
         $total = count($model_tags);//15
         $stepper = ceil($total/$tag_size_level);//3
         $tags = [];

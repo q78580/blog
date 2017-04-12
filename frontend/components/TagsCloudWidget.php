@@ -35,6 +35,7 @@ class TagsCloudWidget extends Widget
 
             $tagString .=  Html::a(Html::tag('h'.$weight,Html::tag('span', $tag, $options),$option),Url::to(['post/index','PostSearch[tags]'=>$tag]))."&nbsp&nbsp";
         }
+        sleep(3);
         return $tagString;
 
     }
