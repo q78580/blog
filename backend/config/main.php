@@ -37,14 +37,20 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+//            'suffix' => '.html',
             'rules' => [
+                '<controller:(post|comment)>s' => "<controller>/index",// '<controller:\w+>s' => "<controller>/index", 所有
+                '<controller:\w+>s/<id:\d+>' => "<controller>/view",
+                '<controller:\w+-\w+>s/<id:\d+>' => "<controller>/view",
+                '<controller:\w+>s/<id:\d+>/<action:create|update|delete>' => "<controller>/<action>",
+                '<controller:\w+-\w+>s/<id:\d+>/<action:create|update|delete>' => "<controller>/<action>",
+//                '<controller:\w+-\w+>s' => "<controller>/index",
+                ///<id:\d+>
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
