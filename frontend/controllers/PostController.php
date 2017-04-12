@@ -8,6 +8,10 @@ use common\models\User;
 use Yii;
 use common\models\Post;
 use common\models\PostSearch;
+use yii\caching\DbDependency;
+use yii\db\Query;
+use yii\filters\HttpCache;
+use yii\filters\PageCache;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -30,6 +34,32 @@ class PostController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'pageCache'=>[
+                'class'=>PageCache::className(),
+                'only'=>['index'],
+                'duration'=>70,
+                'variations'=>[
+                    Yii::$app->request->get('page'),
+                    Yii::$app->request->get('PostSearch'),
+                ],
+                'dependency'=>[
+                    'class'=>DbDependency::className(),
+                    'sql'=>'select count(id) from post'
+                ]
+            ],
+            'httpCache'=>[
+                'class'=>HttpCache::className(),
+                'only'=>['detail'],
+                'lastModified'=>function($action,$params){
+                    $query = new Query();
+                    return $query->from('post')->max('update_time');
+                },
+                'etagSeed'=>function($action,$params){
+                    $post = $this->findModel(Yii::$app->request->get('id'));
+                    return serialize([$post->title,$post->content]);
+                },
+                'cacheControlHeader'=> 'public,max-age=180'
+            ]
         ];
     }
 
@@ -39,15 +69,19 @@ class PostController extends Controller
      */
     public function actionIndex()
     {
-        $tags = Tag::findTagWeights();
-        $comments= Comment::findRecentComments();
         $searchModel = new PostSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+//        $cache_comments = Yii::$app->cache->get('cacheComments');
+//        if($cache_comments == false ){
+            $comments= Comment::findRecentComments();
+//            sleep(3);
+//            Yii::$app->cache->set('cacheComments',$comments);
+//        }
+        $tags = Tag::findTagWeights();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'tags'=>$tags,
+            'tags'=> $tags,
             'comments'=>$comments
         ]);
     }

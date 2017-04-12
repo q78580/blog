@@ -27,7 +27,7 @@ class Post extends _Post
     public function afterSave($insert, $changedAttributes)
     {
         if($insert){
-            Tag::addFrequency($this->tags);
+            Tag::addFrequency(explode(',',$this->tags));
         }else{
             Tag::updateTags($this->tags,$this->_oldTags);
         }
@@ -36,7 +36,7 @@ class Post extends _Post
     }
     public function afterDelete()
     {
-        Tag::removeFrequency($this->tags);
+        Tag::removeFrequency(explode(',',$this->tags));
         return parent::afterDelete();
     }
     public function getUrl(){
